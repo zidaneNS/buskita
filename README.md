@@ -43,13 +43,29 @@ PRIMARY KEY, INT | FOREIGN KEY -> users | FOREIGN KEY -> lists | ENUM (ikut_bera
 ### 1. Auth Section
 #### User / Co :
 1. can register
-2. can login
+2. can login/logout
 3. can edit profile
+
+#### request :
+* register :
+   * (name, email, nim/nip, number, address, password, role , password_confirmation)
+* login/logout :
+  * (nim/nip, password) 
+* update profile :
+  * (name, email, number, address, password, password_confirmation)
+
+---
 
 ### 2. Bus List
 #### User :
 1. can apply bus list
 2. can cancel bus list
+
+#### request :
+* apply bus list :
+  * (user_id, list_id)
+* cancel bus list :
+  * (user_id, list_id)
 
 #### Co :
 1. can delete bus list
@@ -58,3 +74,17 @@ PRIMARY KEY, INT | FOREIGN KEY -> users | FOREIGN KEY -> lists | ENUM (ikut_bera
 4. can create new bus schedule
 5. can apply / cancel another user
 6. can see all user's profiles
+
+#### request :
+* delete bus list :
+  * params (list_id)
+* verify user's present :
+  * (user_id), param (list_id)
+* update bus schedule :
+  * (bus_schedule, capacity, nummber, ikut_berangkat, ikut_pulang, berangkat, pulang, pp, pp_khusus), param (list_id)
+* create new bus schedule :
+  * (bus_schedule, capacity, number)
+* apply/cancel another user
+  * (user_id, list_id)
+* see user's profile
+  * param (user_id)

@@ -24,19 +24,19 @@
 ## Database Structure
 
 ### User
- nim_nip | name | email | number | address | credit_score | password | role
- --------|------|-------|--------|---------|--------------|----------|-----
- PRIMARY KEY, VARCHAR | NOT NULL, VARCHAR | NOT NULL, VARCHAR | NOT NULL, VARCHAR | NOT NULL, TEXT | INT, DEFAULT = 100, MAX = 100 | NOT NULL, VARCHAR | ENUM (user, Co, admin)
+ id | nim_nip | name | email | number | address | credit_score | password | role
+ ---|--------|------|-------|--------|---------|--------------|----------|-----
+ PRIMARY KEY, INT | NOT NULL, UNIQUE, VARCHAR| NOT NULL, VARCHAR | NOT NULL, VARCHAR | NOT NULL, VARCHAR | NOT NULL, TEXT | INT, DEFAULT = 100, MAX = 100 | NOT NULL, VARCHAR | ENUM (user, Co, admin)
 
-### List
+### Schedule
  id | bus_schedule | number | capacity | ikut_berangkat | ikut_pulang | berangkat | pulang | pp | pp_khusus
  ---|--------------|--------|----------|----------------|-------------|----------|--------|----|----------
  PRIMARY KEY, INT | NOT NULL, DATE | NOT NULL, VARHCAR | NOT NULL, INT | INT | INT | INT | INT | INT | INT
 
-### user_list (pivot)
-id | user_id | list_id | type
+### schedule_user (pivot)
+id | user_id | schedule_id | type
 ---|---------|---------|-----
-PRIMARY KEY, INT | FOREIGN KEY -> users | FOREIGN KEY -> lists | ENUM (ikut_berangkat, ikut_pulang, berangkat, pulang, pp, pp_khusus)
+PRIMARY KEY, INT | FOREIGN KEY -> users | FOREIGN KEY -> schedules | ENUM (ikut_berangkat, ikut_pulang, berangkat, pulang, pp, pp_khusus)
 
 
 ## STEP
@@ -63,9 +63,9 @@ PRIMARY KEY, INT | FOREIGN KEY -> users | FOREIGN KEY -> lists | ENUM (ikut_bera
 
 #### request :
 * apply bus list :
-  * (user_id, list_id)
+  * (user_id, schedule_id)
 * cancel bus list :
-  * (user_id, list_id)
+  * (user_id, schedule_id)
 
 #### Co :
 1. can delete bus list
@@ -77,14 +77,14 @@ PRIMARY KEY, INT | FOREIGN KEY -> users | FOREIGN KEY -> lists | ENUM (ikut_bera
 
 #### request :
 * delete bus list :
-  * params (list_id)
+  * params (schedule_id)
 * verify user's present :
-  * (user_id), param (list_id)
+  * (user_id), param (schedule_id)
 * update bus schedule :
-  * (bus_schedule, capacity, nummber, ikut_berangkat, ikut_pulang, berangkat, pulang, pp, pp_khusus), param (list_id)
+  * (bus_schedule, capacity, nummber, ikut_berangkat, ikut_pulang, berangkat, pulang, pp, pp_khusus), param (schedule_id)
 * create new bus schedule :
   * (bus_schedule, capacity, number)
 * apply/cancel another user
-  * (user_id, list_id)
+  * (user_id, schedule_id)
 * see user's profile
   * param (user_id)

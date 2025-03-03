@@ -34,9 +34,9 @@
  PRIMARY KEY, INT | NOT NULL, DATE | NOT NULL, VARHCAR | NOT NULL, INT | INT | INT | INT | INT | INT | INT
 
 ### schedule_user (pivot)
-id | user_id | schedule_id | type
----|---------|---------|-----
-PRIMARY KEY, INT | FOREIGN KEY -> users | FOREIGN KEY -> schedules | ENUM (ikut_berangkat, ikut_pulang, berangkat, pulang, pp, pp_khusus)
+id | user_id | schedule_id | type | status
+---|---------|-------------|------|-------
+PRIMARY KEY, INT | FOREIGN KEY -> users | FOREIGN KEY -> schedules | ENUM (ikut_berangkat, ikut_pulang, berangkat, pulang, pp, pp_khusus) | ENUM (applied, verified)
 
 
 ## STEP
@@ -52,7 +52,7 @@ PRIMARY KEY, INT | FOREIGN KEY -> users | FOREIGN KEY -> schedules | ENUM (ikut_
 * login/logout :
   * (nim/nip, password) 
 * update profile :
-  * (name, email, number, address, password, password_confirmation)
+  * (name, email, number, address), param (user_id)
 
 ---
 

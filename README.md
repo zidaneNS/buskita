@@ -55,6 +55,7 @@
 
 ### schedule_seat (pivot)
  id | schedule_id | seat_id
+ ---|-------------|---------
  PRIMARY KEY, INT | FOREIGN KEY -> schedules | FOREIGN KEY -> seats
 
 

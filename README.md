@@ -34,29 +34,24 @@
  PRIMARY KEY, INT | NOT NULL, UNIQUE, VARCHAR| NOT NULL, VARCHAR | NOT NULL, VARCHAR | NOT NULL, VARCHAR | NOT NULL, TEXT | INT, DEFAULT = 100, MAX = 100 | NOT NULL, VARCHAR | ENUM (user, co, admin)
 
 ### Schedule
- id | bus_schedule | bus_id | route | type | status
- ---|--------------|--------|-------|------|--------
- PRIMARY KEY, INT | NOT NULL, DATE | FOREIGN KEY -> busses | NOT NULL, ENUM (sby_gsk, gsk_sby)| NOT NULL, ENUM(berangkat, pulang) | NOT NULL, ENUM (pending, done)
+ id | bus_schedule | bus_id | route | status
+ ---|--------------|--------|-------|--------
+ PRIMARY KEY, INT | NOT NULL, DATE | FOREIGN KEY -> busses | NOT NULL, ENUM (sby_gsk, gsk_sby) | NOT NULL, ENUM (pending, done)
 
 ### Bus
  id | identity | capacity | available_row | available_col | available_backseat
  ---|----------|----------|---------------|---------------|-------------------
- PRIMARY KEY, INT | NOT NULL, VARCHAR | NOT NULL, INT | NOT NULL, INT | NOT NULL, INT | NULLABLE, INT
+ PRIMARY KEY, INT | NOT NULL, VARCHAR, UNIQUE | NOT NULL, INT | NOT NULL, INT | NOT NULL, INT | NULLABLE, INT
 
 ### Seat
- id | bus_id | row_position | col_position | backseat_position | status
- ---|--------|--------------|--------------|-------------------|-------
- PRIMARY KEY, INT | FOREIGN KEY -> busses | NULLABLE, INT | NULLABLE, INT | NULLABLE, INT | NOT NULL, ENUM (empty, served)
+ id | bus_id | row_position | col_position | backseat_position | status | user_id
+ ---|--------|--------------|--------------|-------------------|--------|-------
+ PRIMARY KEY, INT | FOREIGN KEY -> busses | NULLABLE, INT | NULLABLE, INT | NULLABLE, INT | NOT NULL, ENUM (available, booked) | FOREIGN KEY -> users
 
 ### schedule_user (pivot)
  id | schedule_id | user_id
  ---|-------------|--------
  PRIMARY KEY, INT | FOREIGN KEY -> schedules | FOREIGN KEY -> users
-
-### schedule_seat (pivot)
- id | schedule_id | seat_id
- ---|-------------|---------
- PRIMARY KEY, INT | FOREIGN KEY -> schedules | FOREIGN KEY -> seats
 
 
 ## STEP

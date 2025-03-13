@@ -71,7 +71,7 @@
 
 #### request http
 * register : POST api/register
-  * request : (name, nim_nip, address, phone_number, email, credit_score, role, password, password_confirmation)
+  * request : (name, nim_nip, address, phone_number, email, role, password, password_confirmation)
 * login : POST api/login
   * request : (nim_nip, password)
 * logout : GET api/logout

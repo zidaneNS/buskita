@@ -101,6 +101,16 @@
 * get bus by id : GET api/bus/{bus}
   * request : (-)
 
+#### todo
+- [x] admin co can create
+- [x] bus identity unique
+- [x] admin co can delete
+- [x] admin co can update
+- [x] bus identity unique when update
+- [x] admin co can get all bus
+- [ ] admin co can get bus by id
+- [ ] user can't access
+
 ---
 
 ### 3. Schedule Management

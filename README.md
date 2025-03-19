@@ -33,7 +33,7 @@
  nim_nip | NOT NULL, UNIQUE, VARCHAR
  name | NOT NULL, VARCHAR
  email | NOT NULL, VARCHAR
- phone_number | NOT NULL, VARCHAR
+ phone_number | NOT NULL, UNIQUE, VARCHAR
  address | NOT NULL, TEXT
  credit_score | NOT NULL, INT, DEFAULT = 15, MAX = 15
  password | NOT NULL, VARCHAR

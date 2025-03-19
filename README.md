@@ -24,35 +24,56 @@
 2. can add/delete co
 3. can add/delete user
 
----
-
 ## Database Structure
 
 ### User
- id | nim_nip | name | email | phone_number | address | credit_score | password | role
- ---|--------|------|-------|--------|---------|--------------|----------|-----
- PRIMARY KEY, INT | NOT NULL, UNIQUE, VARCHAR| NOT NULL, VARCHAR | NOT NULL, VARCHAR | NOT NULL, VARCHAR | NOT NULL, TEXT | INT, DEFAULT = 100, MAX = 100 | NOT NULL, VARCHAR | ENUM (user, co, admin)
+ attributes | description
+ -----------|------------
+ id | PRIMARY KEY , INT
+ nim_nip | NOT NULL, UNIQUE, VARCHAR
+ name | NOT NULL, VARCHAR
+ email | NOT NULL, VARCHAR
+ phone_number | NOT NULL, VARCHAR
+ address | NOT NULL, TEXT
+ credit_score | NOT NULL, INT, DEFAULT = 15, MAX = 15
+ password | NOT NULL, VARCHAR
+ role | ENUM (user, co, admin)
 
 ### Schedule
- id | bus_schedule | bus_id | route | status
- ---|--------------|--------|-------|--------
- PRIMARY KEY, INT | NOT NULL, DATE | FOREIGN KEY -> busses | NOT NULL, ENUM (sby_gsk, gsk_sby) | NOT NULL, ENUM (pending, done)
+ attributes | description
+ -----------|------------
+ id | PRIMARY KEY, INT
+ bus_schedule | NOT NULL, DATE
+ bus_id | NOT NULL, FOREIGN KEY -> busses
+ route | NOT NULL, ENUM (sby_gsk, gsk_sby)
+ status | NOT NULL, ENUM (pending, done)
 
 ### Bus
- id | identity | capacity | available_row | available_col | available_backseat
- ---|----------|----------|---------------|---------------|-------------------
- PRIMARY KEY, INT | NOT NULL, VARCHAR, UNIQUE | NOT NULL, INT | NOT NULL, INT | NOT NULL, INT | NULLABLE, INT
+ attributes | description
+ -----------|------------
+ id | PRIMARY KEY, INT
+ identity | NOT NULL, VARCHAR, UNIQUE
+ available_row | NOT NULL, INT
+ available_col | NOT NULL, INT
+ available_backseat | NULLABLE, INT
 
 ### Seat
- id | bus_id | row_position | col_position | backseat_position | status | user_id
- ---|--------|--------------|--------------|-------------------|--------|-------
- PRIMARY KEY, INT | FOREIGN KEY -> busses | NULLABLE, INT | NULLABLE, INT | NULLABLE, INT | NOT NULL, ENUM (available, booked) | FOREIGN KEY -> users
+ attributes | description
+ -----------|------------
+ id | PRIMARY KEY, INT
+ bus_id | NOT NULL, FOREIGN KEY -> busses
+ col_position | NULLABLE, INT
+ row_position | NULLABLE, INT
+ backseat_position | NULLABLE, INT
+ status | NOT NULL, ENUM (available, booked)
+ user_id | NULLABLE, FOREIGN KEY -> users
 
 ### schedule_user (pivot)
- id | schedule_id | user_id
- ---|-------------|--------
- PRIMARY KEY, INT | FOREIGN KEY -> schedules | FOREIGN KEY -> users
-
+ attributes | description
+ -----------|------------
+ id | PRIMARY KEY, INT
+ schedule_id | NOT NULL, FOREIGN KEY -> schedules
+ user_id | NOT NULL, FOREIGN KEY -> users
 
 ## STEP
 ### 1. Authentication

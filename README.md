@@ -66,7 +66,7 @@
  attributes | description
  -----------|------------
  id | PRIMARY KEY, INT
- route_name | NOT NULL, ENUM (sby_gsk, gsk_sby)
+ route_name | NOT NULL, VARCHAR (sby_gsk, gsk_sby)
 
 ### Bus
  attributes | description

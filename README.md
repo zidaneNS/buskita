@@ -1,28 +1,41 @@
-## Features
-1. apply bus list
-2. cancel applied bus list
-3. login (nim/nip, password)
-4. regis (name, email, nim/nip, number, address, password, password_confirmation)
+## Requirement Analysist
+1. User
+   * user can have many schedules.
+   * user only have one seat in every schedules they have.
+   * the data needed for every user is nim / nip, name, email, phone number, and address.
+   * every user have default value of credit score a maximum of 15 points.
+   * user can pick schedule if credit score >= 10 and the schedule not closed.
+   * credit score increase 1 point everyday if credit score < 15.
+   * user have 3 roles (passenger, co, co leader).
+   * user with co or admin role can do CRUD for bus identity and bus schedule. can verify user presents in every schedule. can manipulate pasenger list in every schedule.
+   * passenger role can register for him/her self.
+   * co role cannot register.
+   * co leader role can register for other co or passenger but cannot register for him/her self but hardcoded instead.
+   * co leader role can do CRUD for other co or passenger.
+   * if user have a schedule but not verified until the schedule completed then credit score decrease by 5 points.
 
-## User
-1. have max 100 credit score
-2. if credit score > 90 allowed to apply bus list
-3. if credit score < 100, score increase by 1 everyday
-4. if applied to bus list but not verified (applied but not present in real time) score decrease by 5
+2. Schedule
+   * schedule only have one bus.
+   * schedule only have one route.
+   * schedule contains date, route, bus, and closed or not.
+   * if schedule date equals to 1 hour from now then schedule automatically deleted.
+   * schedule can closed by co or co leader.
 
-## Co
-1. can see all user include their profiles
-2. can manipulate bus list (add or canceling user from bus list)
-3. deleting bus list
-4. verify user's present
-5. update bus schedule
-6. create bus schedule
-7. CRUD bus entity
+3. Route
+   * route can refers to many schedule.
+   * the data needed from route is route_name.
 
-## Admin
-1. same as co
-2. can add/delete co
-3. can add/delete user
+4. Bus
+   * bus can refers many schedules.
+   * bus can have many seats.
+   * the data needed for the bus is identity, available row seat, available column seat, and available backseat (can null).
+   * bus identity must unique
+
+5. Seat
+   * seat only refers atleast to one bus.
+   * seat only refers max to one user.
+   * data needed for seat is row position, column position, and backseat position.
+   * if row and column position is filled then backeat position null or in reverse.
 
 ## Database Structure
 
@@ -37,7 +50,7 @@
  address | NOT NULL, TEXT
  credit_score | NOT NULL, INT, DEFAULT = 15, MAX = 15
  password | NOT NULL, VARCHAR
- role | ENUM (user, co, admin)
+ role | ENUM (passenger, co, co_leader)
 
 ### Schedule
  attributes | description
@@ -45,8 +58,15 @@
  id | PRIMARY KEY, INT
  bus_schedule | NOT NULL, DATE
  bus_id | NOT NULL, FOREIGN KEY -> busses
- route | NOT NULL, ENUM (sby_gsk, gsk_sby)
- status | NOT NULL, ENUM (pending, done)
+ route_id | NOUT NULL, FOREIGN KEY -> routes
+ closed | NOT NULL, BOOLEAN
+ completed | NOT NULL, BOOLEAN
+
+### Route
+ attributes | description
+ -----------|------------
+ id | PRIMARY KEY, INT
+ route_name | NOT NULL, ENUM (sby_gsk, gsk_sby)
 
 ### Bus
  attributes | description
@@ -65,7 +85,6 @@
  col_position | NULLABLE, INT
  row_position | NULLABLE, INT
  backseat_position | NULLABLE, INT
- status | NOT NULL, ENUM (available, booked)
  user_id | NULLABLE, FOREIGN KEY -> users
 
 ### schedule_user (pivot)
@@ -129,8 +148,8 @@
 - [x] admin co can update
 - [x] bus identity unique when update
 - [x] admin co can get all bus
-- [ ] admin co can get bus by id
-- [ ] user can't access
+- [x] admin co can get bus by id
+- [x] user can't access
 
 ---
 

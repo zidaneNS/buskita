@@ -60,7 +60,6 @@
  bus_id | NOT NULL, FOREIGN KEY -> busses
  route_id | NOUT NULL, FOREIGN KEY -> routes
  closed | NOT NULL, BOOLEAN
- completed | NOT NULL, BOOLEAN
 
 ### Route
  attributes | description
@@ -130,25 +129,25 @@
 1. -
 
 #### request http
-* create : POST api/bus
+* create : POST api/buses
   * request : (identity, available_row, available_col, available_backseat)
-* update : PUT api/bus/{bus}
+* update : PUT api/buses/{bus}
   * request : (identity, available_row, available_col, available_backseat)
-* delete : DELETE api/bus/{bus}
+* delete : DELETE api/buses/{bus}
   * request : (-)
-* get all bus : GET api/bus/{bus}
+* get all bus : GET api/buses/{bus}
   * request : (-)
-* get bus by id : GET api/bus/{bus}
+* get bus by id : GET api/buses/{bus}
   * request : (-)
 
 #### todo
-- [x] admin co can create
+- [x] co, co leader can create
 - [x] bus identity unique
-- [x] admin co can delete
-- [x] admin co can update
+- [x] co, co leader can delete
+- [x] co, co leader can update
 - [x] bus identity unique when update
-- [x] admin co can get all bus
-- [x] admin co can get bus by id
+- [x] co, co leader can get all bus
+- [x] co, co leader can get bus by id
 - [x] user can't access
 
 ---
@@ -164,16 +163,25 @@
 1. -
 
 #### request http
-* create : POST api/schedule
-  * request : (bus_schedule, bus_id, route, type)
-* update : PUT api/schedule/{schedule}
-  * request : (bus_schedule, bus_id, route, type)
-* delete : DELETE api/schedule/{schedule}
+* create : POST api/schedules
+  * request : (bus_schedule, bus_id, route_id, closed)
+* update : PUT api/schedules/{schedule}
+  * request : (bus_schedule, bus_id, route_id, closed)
+* delete : DELETE api/schedules/{schedule}
   * request : (-)
-* get all schedules : GET api/schedule
+* get all schedules : GET api/schedules
   * request : (-)
-* get schedules by id : GET api/schedule/{schedule}
+* get schedules by id : GET api/schedules/{schedule}
   * request : (-)
+
+#### todo
+- [x] co, co leader can create schedule.
+- [x] co, co leader can update schedule.
+- [x] co, co leader can delete schedule.
+- [x] user can get all schedules.
+- [ ] user can get schedules by id.
+- [ ] passenger can't access create, update, delete.
+- [ ] schedule deleted 1 hour after the date.
 
 ---
 
@@ -191,15 +199,15 @@
 1. same as admin without no. 2 & 3
 
 #### request http
-* choose seat : POST api/seat
+* choose seat : POST api/seats
   * request : (bus_id, row_position, col_position, backseat, schedule_id)
-* change seat position : PUT api/seat/{seat}
+* change seat position : PUT api/seats/{seat}
   * request : (bus_id, row_position, col_position, backseat, schedule_id)
-* see user's seat list : POST api/seat/schedule
+* see user's seat list : POST api/seats/schedule
   * request : (schedule_id)
-* verify user's seat : PUT api/seat/{seat}
+* verify user's seat : PUT api/seats/{seat}
   * request : (-)
-* kick user from seat : DELETE api/seat/{seat}
+* kick user from seat : DELETE api/seats/{seat}
   * request : (-)
 
 ---
@@ -219,13 +227,13 @@
 1. same as admin
 
 #### request http
-* see all users : GET api/user
+* see all users : GET api/users
   * request : (-)
-* see all co : GET api/user/co
+* see all co : GET api/users/co
   * request : (-)
-* see user / co profile : GET api/user/{user}
+* see user / co profile : GET api/users/{user}
   * request : (-)
-* delete user / co : DELETE api/user/{user}
+* delete user / co : DELETE api/users/{user}
   * request : (-)
-* update profile : PUT api/user/{user}
+* update profile : PUT api/users/{user}
   * request : (name, email, phone_number, address, role)

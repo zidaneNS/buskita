@@ -179,9 +179,9 @@
 - [x] co, co leader can update schedule.
 - [x] co, co leader can delete schedule.
 - [x] user can get all schedules.
-- [ ] user can get schedules by id.
-- [ ] passenger can't access create, update, delete.
-- [ ] schedule deleted 1 hour after the date.
+- [x] user can get schedules by id.
+- [x] passenger can't access create, update, delete.
+- [x] schedule deleted 1 hour after the date.
 
 ---
 
